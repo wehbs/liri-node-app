@@ -48,13 +48,21 @@ function spotify() {
 
 function imdb() {
 
-    var movieQuery = 'http://www.omdbapi.com/?apikey=40e9cece&s=' + value;
+    var movieQuery = 'http://www.omdbapi.com/?apikey=40e9cece&t=' + value;
 
     var request = require('request');
-    request(movieQuery, function (error, response, body) {
-        // console.log(error);
-        // console.log(response); 
-        console.log(body);
+    request(movieQuery, function (error, response) {
+        var results = JSON.parse(response.body);
+
+        console.log('Movie Title: ' + results.Title);
+        console.log('Release Year: ' + results.Year);
+        console.log(results.Ratings[0].Source + ' ' + results.Ratings[0].Value);
+        console.log(results.Ratings[1].Source + ' ' + results.Ratings[1].Value);        
+        console.log('Country: ' + results.Country);
+        console.log('Language: ' + results.Language);        
+        console.log('Plot: ' + results.Plot);
+        console.log('Actors: ' + results.Actors);
+        
     });
 }
 
