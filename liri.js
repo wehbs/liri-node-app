@@ -44,6 +44,62 @@ function twitter() {
 
 function spotify() {
 
+    if (value === undefined) {
+
+        var Spotify = require('node-spotify-api');
+        var spotify = new Spotify({
+            id: 'ad0474555b81410ea40a3803de6fbeca',
+            secret: '42afa4e301754eababc266767c570a5b'
+        });
+        spotify.search({
+            type: 'track',
+            limit: 1,
+            query: 'The Sign Ace Of Base'
+        }, function (err, data) {
+            if (err) {
+                return console.log('Error occurred: ' + err);
+            }
+            var jsonResults = JSON.stringify(data.tracks.items[0]);
+            var artistsName = JSON.stringify('Artist Name: ' + data.tracks.items[0].album.artists[0].name);
+            var songName = JSON.stringify('Song Name: ' + data.tracks.items[0].name);
+            var previewLink = JSON.stringify('Preview Link: ' + data.tracks.items[0].preview_url);
+            var albumName = JSON.stringify('Album Name: ' + data.tracks.items[0].album.name);
+
+            console.log(artistsName);
+            console.log(songName);
+            console.log(previewLink);
+            console.log(albumName);
+
+        });
+
+    } else {
+
+        var Spotify = require('node-spotify-api');
+        var spotify = new Spotify({
+            id: 'ad0474555b81410ea40a3803de6fbeca',
+            secret: '42afa4e301754eababc266767c570a5b'
+        });
+        spotify.search({
+            type: 'track',
+            limit: 1,
+            query: value
+        }, function (err, data) {
+            if (err) {
+                return console.log('Error occurred: ' + err);
+            }
+            var jsonResults = JSON.stringify(data.tracks.items[0]);
+            var artistsName = JSON.stringify('Artist Name: ' + data.tracks.items[0].album.artists[0].name);
+            var songName = JSON.stringify('Song Name: ' + data.tracks.items[0].name);
+            var previewLink = JSON.stringify('Preview Link: ' + data.tracks.items[0].preview_url);
+            var albumName = JSON.stringify('Album Name: ' + data.tracks.items[0].album.name);
+
+            console.log(artistsName);
+            console.log(songName);
+            console.log(previewLink);
+            console.log(albumName);
+
+        });
+    }
 }
 
 function imdb() {
