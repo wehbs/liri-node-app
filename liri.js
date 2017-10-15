@@ -33,52 +33,65 @@ function twitter() {
     };
     client.get('statuses/user_timeline', params, function (error, tweets, response) {
         if (!error) {
-            // console.log(tweets);
+            console.log('\n');
+            console.log('===================================');
+            console.log("           Twitter API");
+            console.log('===================================');
+            console.log('\n');
             for (var i = 0; i < tweets.length; i++) {
-
+                
                 console.log('Tweet: ' + tweets[i].text + ' / Created: ' + tweets[i].created_at);
             }
+            console.log('\n');
+            console.log('===================================');
+            console.log('\n');
         }
     });
 }
 
 function spotify() {
 
+    var Spotify = require('node-spotify-api');
+    var spotify = new Spotify({
+        id: 'ad0474555b81410ea40a3803de6fbeca',
+        secret: '42afa4e301754eababc266767c570a5b'
+    });
+
     if (value === undefined) {
 
-        var Spotify = require('node-spotify-api');
-        var spotify = new Spotify({
-            id: 'ad0474555b81410ea40a3803de6fbeca',
-            secret: '42afa4e301754eababc266767c570a5b'
-        });
         spotify.search({
             type: 'track',
             limit: 1,
             query: 'The Sign Ace Of Base'
         }, function (err, data) {
+
             if (err) {
                 return console.log('Error occurred: ' + err);
             }
+
             var jsonResults = JSON.stringify(data.tracks.items[0]);
             var artistsName = JSON.stringify('Artist Name: ' + data.tracks.items[0].album.artists[0].name);
             var songName = JSON.stringify('Song Name: ' + data.tracks.items[0].name);
             var previewLink = JSON.stringify('Preview Link: ' + data.tracks.items[0].preview_url);
             var albumName = JSON.stringify('Album Name: ' + data.tracks.items[0].album.name);
 
+            console.log('\n');
+            console.log('===================================');
+            console.log("           Spotify API");
+            console.log('===================================');
+            console.log('\n');
             console.log(artistsName);
             console.log(songName);
             console.log(previewLink);
             console.log(albumName);
+            console.log('\n');
+            console.log('===================================');
+            console.log('\n');
 
         });
 
     } else {
 
-        var Spotify = require('node-spotify-api');
-        var spotify = new Spotify({
-            id: 'ad0474555b81410ea40a3803de6fbeca',
-            secret: '42afa4e301754eababc266767c570a5b'
-        });
         spotify.search({
             type: 'track',
             limit: 1,
@@ -93,10 +106,18 @@ function spotify() {
             var previewLink = JSON.stringify('Preview Link: ' + data.tracks.items[0].preview_url);
             var albumName = JSON.stringify('Album Name: ' + data.tracks.items[0].album.name);
 
+            console.log('\n');
+            console.log('===================================');
+            console.log("           Spotify API");
+            console.log('===================================');
+            console.log('\n');
             console.log(artistsName);
             console.log(songName);
             console.log(previewLink);
             console.log(albumName);
+            console.log('\n');
+            console.log('===================================');
+            console.log('\n');
 
         });
     }
@@ -112,6 +133,11 @@ function imdb() {
         request(defaultSearch, function (error, response) {
             var results = JSON.parse(response.body);
 
+            console.log('\n');
+            console.log('===================================');
+            console.log("           OMDb API");
+            console.log('===================================');
+            console.log('\n');
             console.log('Movie Title: ' + results.Title);
             console.log('Release Year: ' + results.Year);
             console.log(results.Ratings[0].Source + ' ' + results.Ratings[0].Value);
@@ -120,16 +146,23 @@ function imdb() {
             console.log('Language: ' + results.Language);
             console.log('Plot: ' + results.Plot);
             console.log('Actors: ' + results.Actors);
+            console.log('\n');
+            console.log('===================================');
+            console.log('\n');
 
         });
 
     } else {
         var movieQuery = 'http://www.omdbapi.com/?apikey=40e9cece&t=' + value;
-
         var request = require('request');
         request(movieQuery, function (error, response) {
             var results = JSON.parse(response.body);
 
+            console.log('\n');
+            console.log('===================================');
+            console.log("           OMDb API");
+            console.log('===================================');
+            console.log('\n');
             console.log('Movie Title: ' + results.Title);
             console.log('Release Year: ' + results.Year);
             console.log(results.Ratings[0].Source + ' ' + results.Ratings[0].Value);
@@ -138,6 +171,9 @@ function imdb() {
             console.log('Language: ' + results.Language);
             console.log('Plot: ' + results.Plot);
             console.log('Actors: ' + results.Actors);
+            console.log('\n');
+            console.log('===================================');
+            console.log('\n');
 
         });
     }
@@ -151,11 +187,17 @@ function doIt() {
             return console.log(error);
         }
 
+        // console.log(data);   
         var output = data.split(",");
+        var justText = output[1].slice("", '"');
 
-        for (var i = 0; i < output.length; i++) {
+        console.log(justText);
+        // console.log(output[0] + ' ' + output[1]);
 
-            console.log(output[i]);
-        }
+        // for (var i = 0; i < output.length; i++) {
+
+        //     console.log(output[0]);
+        //     break;
+        // }
     });
 }
