@@ -39,7 +39,7 @@ function twitter() {
             console.log('===================================');
             console.log('\n');
             for (var i = 0; i < tweets.length; i++) {
-                
+
                 console.log('Tweet: ' + tweets[i].text + ' / Created: ' + tweets[i].created_at);
             }
             console.log('\n');
