@@ -1,5 +1,9 @@
 var fs = require("fs");
 var keys = require("./keys.js");
+var figlet = require("figlet");
+var Twitter = require("twitter");
+var Spotify = require("node-spotify-api");
+var request = require("request");
 
 var action = process.argv[2];
 var value = process.argv[3];
@@ -15,7 +19,7 @@ switch (action) {
         break;
 
     case "movie-this":
-        imdb();
+        omdb();
         break;
 
     case "do-what-it-says":
@@ -26,7 +30,11 @@ switch (action) {
 
 function twitter() {
 
-    var Twitter = require('twitter');
+    figlet('Twitter API', function (err, data) {
+        console.log('\n');
+        console.log(data)
+    });
+
     var client = new Twitter(keys);
     var params = {
         screen_name: 'wehbDesign'
@@ -34,16 +42,14 @@ function twitter() {
     client.get('statuses/user_timeline', params, function (error, tweets, response) {
         if (!error) {
             console.log('\n');
-            console.log('===================================');
-            console.log("           Twitter API");
-            console.log('===================================');
+            console.log('            ===================================');
             console.log('\n');
             for (var i = 0; i < tweets.length; i++) {
 
                 console.log('Tweet: ' + tweets[i].text + ' / Created: ' + tweets[i].created_at);
             }
             console.log('\n');
-            console.log('===================================');
+            console.log('            ===================================');
             console.log('\n');
         }
     });
@@ -51,7 +57,11 @@ function twitter() {
 
 function spotify() {
 
-    var Spotify = require('node-spotify-api');
+    figlet('Spotify API', function (err, data) {
+        console.log('\n');
+        console.log(data)
+    });
+
     var spotify = new Spotify({
         id: 'ad0474555b81410ea40a3803de6fbeca',
         secret: '42afa4e301754eababc266767c570a5b'
@@ -76,16 +86,14 @@ function spotify() {
             var albumName = JSON.stringify('Album Name: ' + data.tracks.items[0].album.name);
 
             console.log('\n');
-            console.log('===================================');
-            console.log("           Spotify API");
-            console.log('===================================');
+            console.log('            ===================================');
             console.log('\n');
             console.log(artistsName);
             console.log(songName);
             console.log(previewLink);
             console.log(albumName);
             console.log('\n');
-            console.log('===================================');
+            console.log('            ===================================');
             console.log('\n');
 
         });
@@ -107,36 +115,35 @@ function spotify() {
             var albumName = JSON.stringify('Album Name: ' + data.tracks.items[0].album.name);
 
             console.log('\n');
-            console.log('===================================');
-            console.log("           Spotify API");
-            console.log('===================================');
+            console.log('            ===================================');
             console.log('\n');
             console.log(artistsName);
             console.log(songName);
             console.log(previewLink);
             console.log(albumName);
             console.log('\n');
-            console.log('===================================');
+            console.log('            ===================================');
             console.log('\n');
 
         });
     }
 }
 
-function imdb() {
+function omdb() {
 
+    figlet('ODMb API', function (err, data) {
+        console.log('\n');
+        console.log(data)
+    });
 
     if (value === undefined) {
 
         defaultSearch = 'http://www.omdbapi.com/?apikey=40e9cece&t=mr.nobody'
-        var request = require('request');
         request(defaultSearch, function (error, response) {
             var results = JSON.parse(response.body);
 
             console.log('\n');
-            console.log('===================================');
-            console.log("           OMDb API");
-            console.log('===================================');
+            console.log('            ===================================');
             console.log('\n');
             console.log('Movie Title: ' + results.Title);
             console.log('Release Year: ' + results.Year);
@@ -147,21 +154,19 @@ function imdb() {
             console.log('Plot: ' + results.Plot);
             console.log('Actors: ' + results.Actors);
             console.log('\n');
-            console.log('===================================');
+            console.log('            ===================================');
             console.log('\n');
 
         });
 
     } else {
+
         var movieQuery = 'http://www.omdbapi.com/?apikey=40e9cece&t=' + value;
-        var request = require('request');
         request(movieQuery, function (error, response) {
             var results = JSON.parse(response.body);
 
             console.log('\n');
-            console.log('===================================');
-            console.log("           OMDb API");
-            console.log('===================================');
+            console.log('            ===================================');
             console.log('\n');
             console.log('Movie Title: ' + results.Title);
             console.log('Release Year: ' + results.Year);
@@ -172,7 +177,7 @@ function imdb() {
             console.log('Plot: ' + results.Plot);
             console.log('Actors: ' + results.Actors);
             console.log('\n');
-            console.log('===================================');
+            console.log('            ===================================');
             console.log('\n');
 
         });
@@ -187,17 +192,30 @@ function doIt() {
             return console.log(error);
         }
 
-        // console.log(data);   
         var output = data.split(",");
-        var justText = output[1].slice("", '"');
+        action = output[0];
+        value = output[1];
 
-        console.log(justText);
-        // console.log(output[0] + ' ' + output[1]);
+        console.log('\n');
+        console.log(output);
 
-        // for (var i = 0; i < output.length; i++) {
+        switch (action) {
+            case "my-tweets":
+                twitter();
+                break;
 
-        //     console.log(output[0]);
-        //     break;
-        // }
+            case "spotify-this-song":
+                spotify();
+                break;
+
+            case "movie-this":
+                omdb();
+                break;
+
+            case "do-what-it-says":
+                doIt();
+                break;
+        }
+
     });
 }
