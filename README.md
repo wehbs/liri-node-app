@@ -13,4 +13,5 @@ Commands
 - node liri do-what-it-says {will read from the random.txt file and execute a command from the previous list}
 
 * Example
+
 ![ScreenShot](img/liri.png "Liri")
